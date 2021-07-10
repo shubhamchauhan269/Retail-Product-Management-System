@@ -1,0 +1,48 @@
+﻿@model IEnumerable<E_Commerce_Portal.Models.Product>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<form method="get" asp-action="Search">
+
+    <select name="option">
+        <option value="1">Search By Name</option>
+        <option value="2">Search By Id</option>
+    </select>
+    <input type="search" placeholder="Enter Product Name ..." name="productNameOrId" />
+    <input type="submit" class="btn-sm btn-primary" />
+
+</form>
+
+<hr />
+
+<div class="row">
+    @foreach (Product item in Model)
+    {
+        <div class="col-sm-4 my-3">
+
+            <div class="card">
+                <img class="card-img-top" src="@("~/image/"+item.Image_Name)" asp-append-version="true" alt="Card image" height="300">
+                <div class="card-body">
+                    <h3 class="card-title float-sm-right">@item.Rating <span>&#9734;</span></h3>
+                    <h4 class="card-title">@item.Name</h4>
+                    <h4 class="card-title"><span>&#8377;</span>@item.Price</h4>
+                    <p class="card-text">@item.Description</p>
+
+                    <a class="btn btn-primary" asp-controller="Cart" asp-action="AddToCart" asp-route-Id="@item.Id">Proceed To Buy</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+    <script type="text/javascript">
+            window.onbeforeunload = function () {
+                window.location.href = "@Url.Action("logout", "Login")";
+            };
+    </script>
+
